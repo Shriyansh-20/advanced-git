@@ -1,1 +1,60 @@
+mkdir git-demo && cd git-demo
+Create a new folder and move into it.
+
+git init
+Create an empty Git repository.
+
+echo "Hello Git" > hello.txt
+Create a file with some content.
+
+Now let Git store that content:
+BLOB=$(git hash-object -w hello.txt)
+
+echo $BLOB
+Git gives that content a hash — its identity inside Git. Same hash for every single time if the content of the file stays the same.
+
+git cat-file -p $BLOB
+Use that hash to ask Git:
+
+**“What exactly did you store?”**
+
+You’ll get:
+
+Hello Git
+
+Now commit it:
+
+git add .
+
+git commit -m "first commit"
+
+Get the commit’s hash:
+
+COMMIT=$(git rev-parse HEAD)
+echo $COMMIT
+
+Inspect it:
+
+git cat-file -p $COMMIT
+
+You’ll see a tree hash.
+🔍 Now follow that hash:
+
+git ls-tree <tree-hash>
+
+And you’ll find the blob hash we started with.
+
+You just traced:
+𝗖𝗼𝗺𝗺𝗶𝘁 → 𝗧𝗿𝗲𝗲 → 𝗕𝗹𝗼𝗯 → 𝗙𝗶𝗹𝗲 𝗰𝗼𝗻𝘁𝗲𝗻𝘁𝘀
+
+Make one more commit and inspect it again.
+You’ll also see:
+
+𝗡𝗲𝘄 𝗖𝗼𝗺𝗺𝗶𝘁 → 𝗣𝗮𝗿𝗲𝗻𝘁 → 𝗣𝗿𝗲𝘃𝗶𝗼𝘂𝘀 𝗖𝗼𝗺𝗺𝗶𝘁
+
+🧠 This is the mental model that helps me - 
+
+🔹 Blob 📄→ What is the file?
+🔹 Tree 🌳→ Where is the file?
+🔹 Commit #️⃣ → What did the project look like, and what came before it?
 
